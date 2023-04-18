@@ -5,8 +5,8 @@ import readline
 
 # Azure API
 openai.api_type = "azure"
-openai.api_base = "INPUT_YOUR_ENDPOINT_URL"
 openai.api_version = "2023-03-15-preview"
+openai.api_base = "INPUT_YOUR_ENDPOINT_URL"
 openai.api_key = "INPUT_YOUR_API_KEY"
 deployment_name = {"engine": "INPUT_YOUR_MODEL_NAME"}
 
