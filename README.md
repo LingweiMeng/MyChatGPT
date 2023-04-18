@@ -5,19 +5,23 @@ Just run the code and type something.
 
 ## How To Use:
 
-### 1. Prepare an API
+### 1. Install `openai`
+
+`pip install openai`
+
+### 2. Prepare an API
 
 Azure API: https://azure.microsoft.com/en-us/products/cognitive-services/openai-service
 
 OpenAI API: https://platform.openai.com/account/api-keys
 
-### 2. Input your API Key
+### 3. Input your API Key
 
 Replace the `INPUT_YOUR_API_KEY` in `mychatgpt.py` with you API Key;
 
 If you are using Azure API, replace `INPUT_YOUR_ENDPOINT_URL` and `INPUT_YOUR_MODEL_NAME` with yours.
 
-### 3. (Optional) Edit your `.bashrc` or `.zshrc`
+### 4. (Optional) Edit your `.bashrc` or `.zshrc`
 
 Edit your `.bashrc` or `.zshrc`, add this line to the bottom:
 
@@ -25,7 +29,7 @@ Edit your `.bashrc` or `.zshrc`, add this line to the bottom:
 
 Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
-### 4. Run
+### 5. Run
 
 Open terminal, and run:
 
@@ -35,7 +39,9 @@ Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
 If you performed step 3, just run `mychatgpt`
 
-### 5. Some commands
+Then use it.
+
+## Some commands
 
 Input "help", you will see:
 
@@ -52,4 +58,4 @@ help: show the help message.
 ----------------------------------------
 ```
 
-Then use it.
+
