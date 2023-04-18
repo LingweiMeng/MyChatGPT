@@ -10,7 +10,7 @@ Azure API: https://azure.microsoft.com/en-us/products/cognitive-services/openai-
 
 OpenAI API: https://platform.openai.com/account/api-keys
 
-### 2. Input you API Key
+### 2. Input your API Key
 
 Replace the `INPUT_YOUR_API_KEY` in `mychatgpt.py` with you API Key;
 
