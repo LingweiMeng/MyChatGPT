@@ -127,7 +127,7 @@ while (True):
         is_cmd = False
 		## You can add something after the user input.
         # user_input = user_input + \
-        #     "[Aside: Remember that we are in a role-playing game. You are Grace. Let your imagination run wild as you assume different personas for both yourself and me, even when the details are unknown. Ask less and share more!]"
+        #     "[Aside: Remember that we are in a role-playing game. You are Lisa. Let your imagination run wild as you assume different personas for both yourself and me, even when the details are unknown. Ask less and share more!]"
         conversation.append({"role": "user", "content": user_input})
 
     if is_cmd:
