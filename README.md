@@ -22,7 +22,7 @@ Edit your `.bashrc` or `.zshrc`, add this line to the bottom:
 
 `alias mychatgpt='python3 /PATH_TO_MYCHATGPT/mychatgpt.py'`
 
-Remember to replace `PATH_TO_MYCHATGPT` to the real path.
+Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
 ### 4. Run
 
@@ -30,7 +30,7 @@ Open terminal, and run:
 
 `python3 /PATH_TO_MYCHATGPT/mychatgpt.py`
 
-Remember to replace `PATH_TO_MYCHATGPT` to the real path.
+Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
 If you performed step 3, just run `mychatgpt`
 
@@ -50,3 +50,5 @@ save [file_name]: save the conversation history to a file.
 help: show the help message.
 ----------------------------------------
 ```
+
+Then use it.
