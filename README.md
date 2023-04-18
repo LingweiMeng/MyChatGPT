@@ -4,6 +4,7 @@ A casual homemade ChatGPT python script that can run using terminal (as long as 
 Just run the code and type something.
 
 ## How To Use:
+
 ### 1. Prepare an API
 
 Azure API: https://azure.microsoft.com/en-us/products/cognitive-services/openai-service
@@ -16,7 +17,7 @@ Replace the `INPUT_YOUR_API_KEY` in `mychatgpt.py` with you API Key;
 
 If you are using Azure API, replace `INPUT_YOUR_ENDPOINT_URL` and `INPUT_YOUR_MODEL_NAME` with yours.
 
-### 3. (optional) Edit your `.bashrc` or `.zshrc`
+### 3. (Optional) Edit your `.bashrc` or `.zshrc`
 
 Edit your `.bashrc` or `.zshrc`, add this line to the bottom:
 
@@ -34,7 +35,7 @@ Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
 If you performed step 3, just run `mychatgpt`
 
-### 5. Some command:
+### 5. Some commands
 
 Input "help", you will see:
 
