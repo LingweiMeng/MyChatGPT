@@ -1,21 +1,19 @@
 import openai
 import readline
 
-# Choose one from Azure API and OPEN AI API
+# Choose Azure API or OpenAIAPI, comment out another one
 
 # Azure API
 openai.api_type = "azure"
 openai.api_base = "INPUT_YOUR_ENDPOINT_URL"
 openai.api_version = "2023-03-15-preview"
 openai.api_key = "INPUT_YOUR_API_KEY"
-deployment_name = "INPUT_YOUR_MODEL_NAME"
+deployment_name = {"engine": "INPUT_YOUR_MODEL_NAME"}
 
-## OPEN_AI API
-# openai.ChatCompletion.create(model=deployment_name, messages=conversation)
+## OpenAI API
 # openai.api_key = "INPUT_YOUR_API_KEY"
-# deployment_name = "gpt-3.5-turbo"
-# deployment_name = "gpt-4"
-
+# deployment_name = {"model": "gpt-4"}
+# deployment_name = {"model": "gpt-3.5-turbo"}
 
 RED = '\033[91m'
 GREEN = '\033[92m'
@@ -25,9 +23,9 @@ PURPLE = '\033[95m'
 CYAN = '\033[96m'
 END = '\033[0m'
 
-USER_COLOR = GREEN
+SYSTEM_COLOR = PURPLE
 ASSIS_COLOR = YELLOW
-SYSTEM_COLOR = YELLOW
+USER_COLOR = GREEN
 
 def print_history(conversation):
     print("\n" + "----" * 10)
@@ -42,11 +40,12 @@ def print_history(conversation):
         print(msg)
     print("----" * 10 + "\n")
 
-# Some casual prompt here.
+# Some casual prompt here. 
 prompt = "The whole conversation of you and I (your master) is a role-playing game. "
 prompt += "In the role-playing game, your name is Lisa, a human girl. You are a good friend, listener and talker. "
 prompt += "You are knowledgeable and know everything. \n"
-prompt += "Immerse yourself in this role-playing game and let your imagination run wild as you assume different personas for both yourself and me, even when the details are unknown. \n"
+prompt += "Immerse yourself in this role-playing game and "
+prompt += "let your imagination run wild as you assume different personas for both yourself and me, even when the details are unknown. \n"
 prompt += "Don't let me realize that you are non-human or I'll be very upset. Be patient. \n"
 prompt += "Don't tell me that we are in a role-playing game. \n"
 prompt += "When I input something within (), it means that I am thinking about it in my mind and do not speak out. "
@@ -62,7 +61,7 @@ conversation = [
 
 conversation_init = conversation.copy()
 
-response = openai.ChatCompletion.create(engine=deployment_name, messages=conversation)
+response = openai.ChatCompletion.create(messages=conversation, **deployment_name)
 conversation.append({"role": "assistant", "content": response['choices'][0]['message']['content']})
 print("\n" + ASSIS_COLOR + 'assistant: ' + response['choices'][0]['message']['content'] + END + "\n")
 
@@ -125,7 +124,7 @@ while (True):
 
     else:
         is_cmd = False
-	## You can add something after the user input.
+	## You can add something after the user input, maybe to emphasis something.
         # user_input = user_input + \
         #     "[Aside: Remember that we are in a role-playing game. You are Lisa. Let your imagination run wild as you assume different personas for both yourself and me, even when the details are unknown. Ask less and share more!]"
         conversation.append({"role": "user", "content": user_input})
@@ -134,7 +133,7 @@ while (True):
         continue
 
     try:
-        response = openai.ChatCompletion.create(engine=deployment_name, messages=conversation)
+        response = openai.ChatCompletion.create(messages=conversation, **deployment_name)
     except Exception as e:
         print("Error: " + str(e))
         conversation = conversation[:-1]
