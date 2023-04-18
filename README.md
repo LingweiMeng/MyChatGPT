@@ -6,9 +6,11 @@ Just run the code and type something.
 
 ## How To Use:
 
-### 1. Install `openai`
+### 1. Install `openai`, and download the script
 
 `pip install openai`
+
+Download (or copy) `mychatgpt.py` lying in this repository.
 
 ### 2. Prepare an API
 
