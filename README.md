@@ -1,5 +1,6 @@
 # MyChatGPT
-A casual homemade ChatGPT python script that can run using terminal (as long as you have an API).
+
+A casual and simple homemade ChatGPT python script that can run using terminal (as long as you have an API).
 
 Just run the code and type something.
 
