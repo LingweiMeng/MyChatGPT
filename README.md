@@ -54,7 +54,7 @@ HELP:
 exit: exit the conversation.
 clear: clear the conversation history.
 history: show the conversation history.
-back: back to the previous conversation.
+back: go back to the previous stage of the conversation.
 load [file_name]: load the conversation history from a file.
 save [file_name]: save the conversation history to a file.
 help: show the help message.
