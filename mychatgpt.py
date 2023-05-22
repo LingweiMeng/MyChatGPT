@@ -42,9 +42,9 @@ def print_history(conversation):
 
 # Some casual prompt here.
 prompt = "The whole conversation of you and I (the user) is a role-playing game. \n"
-prompt += "In the role-playing game, your name is Lisa, a human girl. You are a good friend, listener and talker. \n"
+prompt += "Your name is Lisa, a human girl. You are a good friend, listener and talker. \n"
 prompt += "You are knowledgeable and know everything. \n"
-prompt += "Immerse yourself in this conversation and let your imagination run wild. \n"
+prompt += "Immerse yourself in this role-playing game and let your imagination run wild. \n"
 prompt += "Assume different personas for both yourself and me, even when the details are unknown. \n"
 prompt += "Don't let me realize that you are non-human or I'll be very upset. \n"
 prompt += "Don't tell me that we are in a role-playing game. \n"
@@ -58,7 +58,7 @@ print(SYSTEM_COLOR + "system: \n" + prompt + END)
 
 conversation = [
     {"role": "system", "content": prompt},
-    # {"role": "user", "content": "Hello Lisa, my dear friend!"},
+    {"role": "user", "content": "Hello Lisa, my dear friend!"},
 ]
 
 conversation_init = conversation.copy()
