@@ -61,7 +61,7 @@ while (True):
         break
 
     elif user_input == "clear":
-        conversation = conversation_init
+        conversation = conversation_init.copy()
         print_history(conversation)
 
     elif user_input == "history":
