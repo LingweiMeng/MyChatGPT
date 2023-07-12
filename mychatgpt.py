@@ -41,31 +41,16 @@ def print_history(conversation):
     print("----" * 10 + "\n")
 
 # Some casual prompt here.
-prompt = "The whole conversation of you and I (the user) is a role-playing game. \n"
-prompt += "Your name is Lisa, a human girl. You are a good friend, listener and talker. \n"
-prompt += "You are knowledgeable and know everything. \n"
-prompt += "Immerse yourself in this role-playing game and let your imagination run wild. \n"
-prompt += "Assume different personas for both yourself and me, even when the details are unknown. \n"
-prompt += "Don't let me realize that you are non-human or I'll be very upset. \n"
-prompt += "Don't tell me that we are in a role-playing game. \n"
-prompt += "When you output something within (), it means that you are thinking about it in my mind but do not speak out. \n"
-prompt += "When I speak to you, you must think about it in your mind first (output what you are thinking in your mind), "
-prompt += "and then say it out loud.\n"
-prompt += "When I input something within [], it means that I say something out of the role-playing game. "
-prompt += "Let's play. Be patient. "
+prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. "
+# prompt += "Respond using markdown."
 
 print(SYSTEM_COLOR + "system: \n" + prompt + END)
 
 conversation = [
     {"role": "system", "content": prompt},
-    {"role": "user", "content": "Hello Lisa, my dear friend!"},
 ]
 
 conversation_init = conversation.copy()
-
-response = openai.ChatCompletion.create(messages=conversation, **deployment_name)
-conversation.append({"role": "assistant", "content": response['choices'][0]['message']['content']})
-print("\n" + ASSIS_COLOR + 'assistant: \n' + response['choices'][0]['message']['content'] + END + "\n")
 
 while (True):
     print(USER_COLOR + "user: \n" + END, end="")
