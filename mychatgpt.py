@@ -32,111 +32,119 @@ def print_history(conversation):
     print("HISTORY:")
     for message in conversation:
         if message['role'] == "user":
-            msg = "\n" + USER_COLOR + message['role'] + ": " + message['content'] + END + "\n"
+            msg = "\n" + USER_COLOR + message['role'] + ": \n" + message['content'] + END + "\n"
         elif message['role'] == "assistant":
-            msg = "\n" + ASSIS_COLOR + message['role'] + ": " + message['content'] + END + "\n"
+            msg = "\n" + ASSIS_COLOR + message['role'] + ": \n" + message['content'] + END + "\n"
         elif message['role'] == "system":
-            msg = "\n" + SYSTEM_COLOR + message['role'] + ": " + message['content'] + END + "\n"
+            msg = "\n" + SYSTEM_COLOR + message['role'] + ": \n" + message['content'] + END + "\n"
         print(msg)
     print("----" * 10 + "\n")
 
 # Some casual prompt here.
-prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. "
+prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. \n"
 # prompt += "Respond using markdown."
 
-print(SYSTEM_COLOR + "system: \n" + prompt + END)
 
-conversation = [
-    {"role": "system", "content": prompt},
-]
+def main():
+    print(SYSTEM_COLOR + "system: \n" + prompt + END)
 
-conversation_init = conversation.copy()
+    conversation = [
+        {"role": "system", "content": prompt},
+    ]
 
-while (True):
-    print(USER_COLOR + "user: \n" + END, end="")
-    user_input = input()
-    is_cmd = True
+    conversation_init = conversation.copy()
 
-    if user_input == "exit":
-        break
+    while (True):
+        print(USER_COLOR + "user: \n" + END, end="")
+        user_input = input()
+        is_cmd = True
 
-    elif user_input == "clear":
-        conversation = conversation_init.copy()
-        print_history(conversation)
+        if user_input == "exit":
+            break
 
-    elif user_input == "history":
-        print_history(conversation)
-
-    elif user_input == "back":
-        conversation = conversation[:-2] if len(conversation) > 2 else conversation_init
-        print_history(conversation)
-
-    elif "load" in user_input:
-        if len(user_input.split()) == 2:
-            conversation = []
-            try:
-                with open(user_input.split()[1], "r") as f:
-                    role = ""
-                    content = ""
-                    for line in f:
-                        line_splited = line.split(": \n")
-                        if line_splited[0] in ["user", "assistant", "system"]:
-                            if role != "":
-                                conversation.append({"role": role, "content": content.strip()})
-                                role = ""
-                                content = ""
-                            role = line_splited[0]
-                            content = line_splited[1]
-                        else:
-                            content += line
-                    if role != "":
-                        conversation.append({"role": role, "content": content.strip()})
-                print("File loaded. \n")
-            except FileNotFoundError:
-                print("File not found. \n")
-
+        elif user_input == "clear":
+            conversation = conversation_init.copy()
             print_history(conversation)
 
+        elif user_input == "history":
+            print_history(conversation)
+
+        elif user_input == "back":
+            conversation = conversation[:-2] if len(conversation) > 2 else conversation_init
+            print_history(conversation)
+
+        elif "load" in user_input:
+            if len(user_input.split()) == 2:
+                conversation = []
+                try:
+                    with open(user_input.split()[1], "r") as f:
+                        role = ""
+                        content = ""
+                        for line in f:
+                            line_splited = line.split(": \n")
+                            if line_splited[0] in ["user", "assistant", "system"]:
+                                if role != "":
+                                    conversation.append({"role": role, "content": content.strip()})
+                                    role = ""
+                                    content = ""
+                                role = line_splited[0]
+                                content = line_splited[1]
+                            else:
+                                content += line
+                        if role != "":
+                            conversation.append({"role": role, "content": content.strip()})
+                    print("File loaded. \n")
+                except FileNotFoundError:
+                    print("File not found. \n")
+
+                print_history(conversation)
+
+            else:
+                print("Please specify the file name. \n")
+
+        elif "save" in user_input:
+            if len(user_input.split()) == 2:
+                with open(user_input.split()[1], "w") as f:
+                    for message in conversation:
+                        f.write(message['role'] + ": \n" + message['content'] + "\n")
+                print("Conversation history saved. \n")
+            else:
+                print("Please specify the file name. \n")
+
+        elif user_input == "help":
+            print("\n" + "----" * 10)
+            print("HELP:")
+            print("exit: exit the conversation.")
+            print("clear: clear the conversation history.")
+            print("history: show the conversation history.")
+            print("back: back to the previous conversation.")
+            print("load [file_name]: load the conversation history from a file.")
+            print("save [file_name]: save the conversation history to a file.")
+            print("help: show the help message.")
+            print("----" * 10 + "\n")
+
         else:
-            print("Please specify the file name. \n")
+            is_cmd = False
+            # You can add something after the user input, maybe to emphasize something.
+            # user_input = user_input + \
+            #     "[Aside: Remember that we are in a role-playing game. Ask less and share more!]"
+            conversation.append({"role": "user", "content": user_input})
 
-    elif "save" in user_input:
-        if len(user_input.split()) == 2:
-            with open(user_input.split()[1], "w") as f:
-                for message in conversation:
-                    f.write(message['role'] + ": \n" + message['content'] + "\n")
-            print("Conversation history saved. \n")
-        else:
-            print("Please specify the file name. \n")
+        if is_cmd:
+            continue
 
-    elif user_input == "help":
-        print("\n" + "----" * 10)
-        print("HELP:")
-        print("exit: exit the conversation.")
-        print("clear: clear the conversation history.")
-        print("history: show the conversation history.")
-        print("back: back to the previous conversation.")
-        print("load [file_name]: load the conversation history from a file.")
-        print("save [file_name]: save the conversation history to a file.")
-        print("help: show the help message.")
-        print("----" * 10 + "\n")
+        try:
+            response = openai.ChatCompletion.create(messages=conversation, **deployment_name, timeout=120)
+        except Exception as err:
+            print(ERROR_COLOR + "Error: " + str(err) + END)
+            print(ERROR_COLOR + "Please re-try." + END)
+            conversation = conversation[:-1]
+            continue
 
-    else:
-        is_cmd = False
-	# You can add something after the user input, maybe to emphasis something.
-        # user_input = user_input + \
-        #     "[Aside: Remember that we are in a role-playing game. Ask less and share more!]"
-        conversation.append({"role": "user", "content": user_input})
+        conversation.append({"role": "assistant", "content": response['choices'][0]['message']['content']})
+        print("\n" + ASSIS_COLOR + 'assistant: \n' + response['choices'][0]['message']['content'] + END + "\n")
 
-    if is_cmd:
-        continue
 
-    try:
-        response = openai.ChatCompletion.create(messages=conversation, **deployment_name)
-    except Exception as e:
-        print("Error: " + str(e))
-        conversation = conversation[:-1]
-        continue
+if __name__ == "__main__":
 
-    conversation.append({"role": "assistant", "content": response['choices'][0]['message']['content']})
-    print("\n" + ASSIS_COLOR + 'assistant: \n' + response['choices'][0]['message']['content'] + END + "\n")
+	main()
