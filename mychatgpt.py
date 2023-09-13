@@ -134,7 +134,7 @@ def main():
             continue
 
         try:
-            response = openai.ChatCompletion.create(messages=conversation, **deployment_name, timeout=120)
+            response = openai.ChatCompletion.create(messages=conversation, **deployment_name, request_timeout=120)
         except Exception as err:
             print(ERROR_COLOR + "Error: " + str(err) + END)
             print(ERROR_COLOR + "Please re-try." + END)
