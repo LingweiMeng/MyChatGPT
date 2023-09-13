@@ -10,7 +10,7 @@ openai.api_base = "INPUT_YOUR_ENDPOINT_URL"
 openai.api_key = "INPUT_YOUR_API_KEY"
 deployment_name = {"engine": "INPUT_YOUR_MODEL_NAME"}
 
-## OpenAI API
+# OpenAI API
 # openai.api_key = "INPUT_YOUR_API_KEY"
 # deployment_name = {"model": "gpt-4"}
 # deployment_name = {"model": "gpt-3.5-turbo"}
@@ -27,6 +27,11 @@ SYSTEM_COLOR = PURPLE
 ASSIS_COLOR = YELLOW
 USER_COLOR = GREEN
 
+# Some casual prompt here.
+prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. \n"
+# prompt += "Respond using markdown."
+
+
 def print_history(conversation):
     print("\n" + "----" * 10)
     print("HISTORY:")
@@ -39,10 +44,6 @@ def print_history(conversation):
             msg = "\n" + SYSTEM_COLOR + message['role'] + ": \n" + message['content'] + END + "\n"
         print(msg)
     print("----" * 10 + "\n")
-
-# Some casual prompt here.
-prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. \n"
-# prompt += "Respond using markdown."
 
 
 def main():
@@ -147,4 +148,4 @@ def main():
 
 if __name__ == "__main__":
 
-	main()
+    main()
