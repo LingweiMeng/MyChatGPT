@@ -26,6 +26,8 @@ END = '\033[0m'
 SYSTEM_COLOR = PURPLE
 ASSIS_COLOR = YELLOW
 USER_COLOR = GREEN
+ERROR_COLOR = RED
+
 
 # Some casual prompt here.
 prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. \n"
