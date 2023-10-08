@@ -35,17 +35,17 @@ prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the 
 
 
 def print_history(conversation):
-    print("\n" + "----" * 20)
+    print("\n┌" + "──────" * 10 + "\n")
     print("HISTORY:")
     for message in conversation:
-        if message['role'] == "user":
-            msg = "\n" + USER_COLOR + message['role'] + ": \n" + message['content'] + END
-        elif message['role'] == "assistant":
-            msg = "\n" + ASSIS_COLOR + message['role'] + ": \n" + message['content'] + END
-        elif message['role'] == "system":
-            msg = "\n" + SYSTEM_COLOR + message['role'] + ": \n" + message['content'] + END
+        if message["role"] == "user":
+            msg = "\n" + USER_COLOR + message["role"] + ": \n" + message["content"] + END
+        elif message["role"] == "assistant":
+            msg = "\n" + ASSIS_COLOR + message["role"] + ": \n" + message["content"] + END
+        elif message["role"] == "system":
+            msg = "\n" + SYSTEM_COLOR + message["role"] + ": \n" + message["content"] + END
         print(msg)
-    print("\n" + "----" * 20 + "\n")
+    print("\n└" + "──────" * 10 + "\n")
 
 
 def main():
