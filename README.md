@@ -1,6 +1,6 @@
 # MyChatGPT
 
-A casual and simple homemade ChatGPT python script that can run using terminal (as long as you have an API).
+A casual and simple homemade ChatGPT Python script that can run using terminal (as long as you have an API).
 
 Just run the code and type something.
 
@@ -14,7 +14,7 @@ For MacOS and Linux:
 For Windows:
 `pip install openai pyreadline`
 
-Then, download (or copy) `mychatgpt.py` lying in this repository.
+Then, download (or copy) `mychatgpt.py` in this repository.
 
 ### 2. Prepare an API
 
@@ -24,13 +24,13 @@ OpenAI API: https://platform.openai.com/account/api-keys
 
 ### 3. Input your API Key
 
-Replace the `INPUT_YOUR_API_KEY` in `mychatgpt.py` with you API Key;
+Replace the `INPUT_YOUR_API_KEY` in `mychatgpt.py` with your API Key;
 
-If you are using Azure API, replace `INPUT_YOUR_ENDPOINT_URL` and `INPUT_YOUR_MODEL_NAME` with yours.
+If you use Azure API, replace `INPUT_YOUR_ENDPOINT_URL` and `INPUT_YOUR_MODEL_NAME` with yours.
 
 ### 4. (Optional) Edit your `.bashrc` or `.zshrc`
 
-Edit your `.bashrc` or `.zshrc`, add this line to the bottom:
+Edit your `.bashrc` or `.zshrc` to add this line to the bottom:
 
 `alias mychatgpt='python3 /PATH_TO_MYCHATGPT/mychatgpt.py'`
 
