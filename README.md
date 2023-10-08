@@ -44,7 +44,7 @@ Open terminal, and run:
 
 Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
-If you performed step 3, just run `mychatgpt`
+If you performed step 4, just run `mychatgpt`
 
 Then use it.
 
