@@ -8,9 +8,13 @@ Just run the code and type something.
 
 ### 1. Install `openai`, and download the script
 
-`pip install openai`
+For MacOS and Linux:
+`pip install openai readline`
 
-Download (or copy) `mychatgpt.py` lying in this repository.
+For Windows:
+`pip install openai pyreadline`
+
+Then, download (or copy) `mychatgpt.py` lying in this repository.
 
 ### 2. Prepare an API
 
