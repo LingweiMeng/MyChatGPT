@@ -50,9 +50,14 @@ If you performed step 4, just run `mychatgpt`, then use it.
 
 #### Run with commands
 
-Run with additional prompts, and set `temperature` to `1.1`:
+Run with additional prompts:
 ```
-mychatgpt --prompt YOUR_PROMPT --temperature 1.1
+mychatgpt --prompt YOUR_PROMPT
+```
+
+Run with setting the temperature to 1.1 (the higher the value, the random the text, default 1.0):
+```
+mychatgpt --prompt YOUR_PROMPT 1.1
 ```
 
 Run and save conversation history on the fly:
