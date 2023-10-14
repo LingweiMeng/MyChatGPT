@@ -50,9 +50,9 @@ If you performed step 4, just run `mychatgpt`, then use it.
 
 #### Run with commands
 
-Run with additional prompts:
+Run with additional prompts, and set `temperature` to `1.1`:
 ```
-mychatgpt --prompt YOUR_PROMPT 
+mychatgpt --prompt YOUR_PROMPT --temperature 1.1
 ```
 
 Run and save conversation history on the fly:
@@ -76,8 +76,9 @@ exit: exit the conversation.
 clear: clear the conversation history.
 history: show the conversation history.
 back: go back to the previous stage of the conversation.
-load [file_name]: load the conversation history from a file.
-save [file_name]: save the conversation history to a file.
+print("temperature: check and change the temperature.")
+print("load FILE_PATH: load the conversation history from a file.")
+print("save FILE_PATH: save the conversation history to a file.")
 help: show the help message.
 ----------------------------------------
 ```
