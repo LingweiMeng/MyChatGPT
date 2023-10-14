@@ -40,17 +40,34 @@ Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
 Open terminal, and run:
 
-`python3 /PATH_TO_MYCHATGPT/mychatgpt.py`
+```
+python3 /PATH_TO_MYCHATGPT/mychatgpt.py
+```
 
 Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
-If you performed step 4, just run `mychatgpt`
+If you performed step 4, just run `mychatgpt`, then use it.
 
-Then use it.
+#### Run with commands
+
+Run with additional prompts:
+```
+mychatgpt --prompt YOUR_PROMPT 
+```
+
+Run and save conversation history on the fly:
+```
+mychatgpt --save SAVE_PATH
+```
+
+Load conversation history and run:
+```
+mychatgpt --load LOAD_PATH
+```
 
 ## Some commands
 
-Input "help", you will see:
+Run `mychatgpt`, and input "help", you will see:
 
 ```
 ----------------------------------------
