@@ -81,9 +81,9 @@ exit: exit the conversation.
 clear: clear the conversation history.
 history: show the conversation history.
 back: go back to the previous stage of the conversation.
-print("temperature: check and change the temperature.")
-print("load FILE_PATH: load the conversation history from a file.")
-print("save FILE_PATH: save the conversation history to a file.")
+temperature: check and change the temperature.
+load FILE_PATH: load the conversation history from a file.
+save FILE_PATH: save the conversation history to a file.
 help: show the help message.
 ----------------------------------------
 ```
