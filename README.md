@@ -4,6 +4,8 @@ A casual and simple homemade ChatGPT Python script that can run using terminal (
 
 Just run the code and type something.
 
+**(NOTE: Your input must end with a '#'.)**
+
 ## How To Use:
 
 ### 1. Install `openai`, and download the script
@@ -46,7 +48,7 @@ python3 /PATH_TO_MYCHATGPT/mychatgpt.py
 
 Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
-If you performed step 4, just run `mychatgpt`, then use it.
+If you performed step 4, just run `mychatgpt`, then use it. **(NOTE: Your input must end with a '#'.)**
 
 #### Run with commands
 
