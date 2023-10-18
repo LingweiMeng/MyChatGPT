@@ -4,7 +4,7 @@ A casual and simple homemade ChatGPT Python script that can run using terminal (
 
 Just run the code and type something.
 
-**(NOTE: Your input must end with a '#'.)**
+**(NOTE: Your input must end with a '#', such as 'How are you? #')**
 
 ## How To Use:
 
@@ -51,7 +51,7 @@ Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 If you performed step 4, just run `mychatgpt`.
 
 Then use it. 
-**(NOTE: Your input must end with a '#', such as "How are you? #")**
+**(NOTE: Your input must end with a '#', such as 'How are you? #')**
 
 #### Run with commands
 
