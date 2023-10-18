@@ -53,7 +53,9 @@ class MyChatGPT:
         self.temperature = args.temperature
         self.frequency_penalty = args.frequency_penalty
         self.presence_penalty = args.presence_penalty
-        
+
+        print(INFO_COLOR + "NOTE: Your input must end with a '#'. \n" + END)
+
         if args.load is not None:
             self.load_from_file(args.load)
         else:
@@ -218,6 +220,6 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     args.prompt = prompt + "\n" + args.prompt if args.prompt is not None else prompt
-
+    
     mychatgpt = MyChatGPT(args)
     mychatgpt.run()
