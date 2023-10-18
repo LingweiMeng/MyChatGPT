@@ -48,7 +48,10 @@ python3 /PATH_TO_MYCHATGPT/mychatgpt.py
 
 Remember to replace `PATH_TO_MYCHATGPT` with the real path.
 
-If you performed step 4, just run `mychatgpt`, then use it. **(NOTE: Your input must end with a '#'.)**
+If you performed step 4, just run `mychatgpt`.
+
+Then use it. 
+**(NOTE: Your input must end with a '#', such as "How are you? #")**
 
 #### Run with commands
 
