@@ -49,7 +49,7 @@ class MyChatGPT:
         self.conversation = []
         self.conversation_init = []
         self.save_on_the_fly = args.save
-        
+
         self.temperature = args.temperature
         self.frequency_penalty = args.frequency_penalty
         self.presence_penalty = args.presence_penalty
@@ -61,31 +61,15 @@ class MyChatGPT:
         else:
             self.conversation.append({"role": "system", "content": args.prompt})
             print(SYSTEM_COLOR + "system: \n" + args.prompt + END + "\n")
-
         self.conversation_init = self.conversation.copy()
 
-    def multiline_input(self, ending_character='#'):
-        input_list = []
-        while True:
-            temp = input()
-            if temp == "":
-                print()
-            elif temp == ending_character:
-                break
-            elif temp and temp[-1] == ending_character:
-                input_list.append(temp[:-1])
-                break
-            input_list.append(temp)
-        # print("submit")
-        return "\n".join(input_list)
-    
     def print_history(self):
         print(f"\n┌{'──────'*10}\n")
         print("HISTORY:")
         for message in self.conversation:
             color = USER_COLOR if message["role"] == "user" \
-                    else ASSIS_COLOR if message["role"] == "assistant" \
-                    else SYSTEM_COLOR
+                else ASSIS_COLOR if message["role"] == "assistant" \
+                else SYSTEM_COLOR
             print(f"\n{color}{message['role']}:\n{message['content']}{END}")
         print(f"\n└{'──────'*10}\n")
 
@@ -97,7 +81,7 @@ class MyChatGPT:
                 role = None
                 content = ""
                 # load temperature
-                if lines[0].split()[0] == "temperature:": 
+                if lines[0].split()[0] == "temperature:":
                     self.temperature = float(lines[0].split()[1])
                     lines = lines[2:]
                 for line in lines:
@@ -128,57 +112,72 @@ class MyChatGPT:
         except FileNotFoundError:
             print(ERROR_COLOR + "Error: Conversation history not saved. It may be a path error.\n" + END)
 
+    def multiline_input(self, ending_character='#'):
+        input_list = []
+        is_cmd = True
+        while True:
+            temp = input()
+            
+            if input_list == []:
+                if temp == "clear":
+                    self.conversation = self.conversation_init.copy()
+                    self.print_history()
+
+                elif temp == "history":
+                    self.print_history()
+
+                elif temp == "back":
+                    self.conversation = self.conversation[:-2] if len(self.conversation) > 2 else self.conversation_init
+                    self.print_history()
+
+                elif temp == "temperature":
+                    print(INFO_COLOR + "Current temperature: " + str(self.temperature) + END)
+                    print(INFO_COLOR + "Please input a new temperature value: " + END)
+                    self.temperature = float(input())
+                    print()
+
+                elif len(temp.split()) == 2 and temp.split()[0] == "load":
+                    self.load_from_file(temp.split()[1])
+
+                elif len(temp.split()) == 2 and temp.split()[0] == "save":
+                    self.save_to_file(temp.split()[1])
+
+                elif temp == "help":
+                    print(INFO_COLOR + "\n" + "----" * 10)
+                    print("HELP:")
+                    print("clear: clear the conversation history.")
+                    print("history: show the conversation history.")
+                    print("back: back to the previous conversation.")
+                    print("temperature: check and change the temperature.")
+                    print("load FILE_PATH: load the conversation history from a file.")
+                    print("save FILE_PATH: save the conversation history to a file.")
+                    print("help: show the help message.")
+                    print("----" * 10 + END + "\n")
+                else:
+                    is_cmd = False
+                if is_cmd:
+                    return
+            
+            if temp == "":
+                print()
+            elif temp == ending_character:
+                break
+            elif temp and temp[-1] == ending_character:
+                input_list.append(temp[:-1])
+                break
+            input_list.append(temp)
+        # print("submit")
+        return "\n".join(input_list)
+
     def run(self):
         while (True):
             print(USER_COLOR + "user: " + END)
             user_input = self.multiline_input()
-            is_cmd = True
 
-            if user_input == "exit":
-                break
-
-            elif user_input == "clear":
-                self.conversation = self.conversation_init.copy()
-                self.print_history()
-
-            elif user_input == "history":
-                self.print_history()
-
-            elif user_input == "back":
-                self.conversation = self.conversation[:-2] if len(self.conversation) > 2 else self.conversation_init
-                self.print_history()
-
-            elif user_input == "temperature":
-                print(INFO_COLOR + "Current temperature: " + str(self.temperature) + END)
-                print(INFO_COLOR + "Please input a new temperature value: " + END)
-                self.temperature = float(input())
-                print()
-
-            elif len(user_input.split()) == 2 and user_input.split()[0] == "load":
-                self.load_from_file(user_input.split()[1])
-
-            elif len(user_input.split()) == 2 and user_input.split()[0] == "save":
-                self.save_to_file(user_input.split()[1])
-            
-            elif user_input == "help":
-                print(INFO_COLOR + "\n" + "----" * 10)
-                print("HELP:")
-                print("exit: exit the conversation.")
-                print("clear: clear the conversation history.")
-                print("history: show the conversation history.")
-                print("back: back to the previous conversation.")
-                print("temperature: check and change the temperature.")
-                print("load FILE_PATH: load the conversation history from a file.")
-                print("save FILE_PATH: save the conversation history to a file.")
-                print("help: show the help message.")
-                print("----" * 10 + END + "\n")
-
-            else:
-                is_cmd = False
-                self.conversation.append({"role": "user", "content": user_input})
-
-            if is_cmd:
+            if user_input is None:
                 continue
+            else:
+                self.conversation.append({"role": "user", "content": user_input})
 
             try:
                 response = openai.ChatCompletion.create(
@@ -211,7 +210,7 @@ if __name__ == "__main__":
                             help="The higher the value, the random the text.")
     arg_parser.add_argument("--frequency_penalty", type=float, default=creation_params["frequency_penalty"],
                             help="The higher the value, the less repetitive text.")
-    arg_parser.add_argument("--presence_penalty", type=float, default=creation_params["presence_penalty"], 
+    arg_parser.add_argument("--presence_penalty", type=float, default=creation_params["presence_penalty"],
                             help="The higher the value, the more likely the model will talk about new topics.")
     # arg_parser.add_argument("--max_tokens", type=int, default=creation_params["max_tokens"],
     #                         help="The maximum number of tokens to generate.")
@@ -220,6 +219,7 @@ if __name__ == "__main__":
     args = arg_parser.parse_args()
 
     args.prompt = prompt + "\n" + args.prompt if args.prompt is not None else prompt
-    
+
     mychatgpt = MyChatGPT(args)
     mychatgpt.run()
+
