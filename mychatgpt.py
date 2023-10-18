@@ -62,6 +62,21 @@ class MyChatGPT:
 
         self.conversation_init = self.conversation.copy()
 
+    def multiline_input(self, ending_character='#'):
+        input_list = []
+        while True:
+            temp = input()
+            if temp == "":
+                print()
+            elif temp == ending_character:
+                break
+            elif temp and temp[-1] == ending_character:
+                input_list.append(temp[:-1])
+                break
+            input_list.append(temp)
+        # print("submit")
+        return "\n".join(input_list)
+    
     def print_history(self):
         print(f"\n┌{'──────'*10}\n")
         print("HISTORY:")
@@ -114,7 +129,7 @@ class MyChatGPT:
     def run(self):
         while (True):
             print(USER_COLOR + "user: " + END)
-            user_input = input()
+            user_input = self.multiline_input()
             is_cmd = True
 
             if user_input == "exit":
