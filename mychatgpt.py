@@ -101,13 +101,13 @@ class MyChatGPT:
         except FileNotFoundError:
             print(ERROR_COLOR + "File not found.\n" + END)
 
-    def save_to_file(self, file_name, is_cmd=True):
+    def save_to_file(self, file_name, on_the_fly=False):
         try:
             lines = [f"{message['role']}:\n{message['content']}\n\n" for message in self.conversation]
             with open(file_name, "w") as f:
                 f.write(f"temperature: {self.temperature}\n\n")
                 f.writelines(lines)
-            if is_cmd:
+            if not on_the_fly:
                 print(INFO_COLOR + "Conversation history saved.\n" + END)
         except FileNotFoundError:
             print(ERROR_COLOR + "Error: Conversation history not saved. It may be a path error.\n" + END)
@@ -119,30 +119,30 @@ class MyChatGPT:
             temp = input()
             
             if input_list == []:
-                if temp == "clear":
+                if temp in ('clear', 'clear' + ending_character):
                     self.conversation = self.conversation_init.copy()
                     self.print_history()
 
-                elif temp == "history":
+                elif temp in ('history', 'history' + ending_character):
                     self.print_history()
 
-                elif temp == "back":
+                elif temp in ('back', 'back' + ending_character):
                     self.conversation = self.conversation[:-2] if len(self.conversation) > 2 else self.conversation_init
                     self.print_history()
 
-                elif temp == "temperature":
+                elif temp in ('temperature', 'temperature' + ending_character):
                     print(INFO_COLOR + "Current temperature: " + str(self.temperature) + END)
                     print(INFO_COLOR + "Please input a new temperature value: " + END)
                     self.temperature = float(input())
                     print()
 
                 elif len(temp.split()) == 2 and temp.split()[0] == "load":
-                    self.load_from_file(temp.split()[1])
+                    self.load_from_file(temp.split()[1].strip(ending_character))
 
                 elif len(temp.split()) == 2 and temp.split()[0] == "save":
-                    self.save_to_file(temp.split()[1])
+                    self.save_to_file(temp.split()[1].strip(ending_character))
 
-                elif temp == "help":
+                elif temp in ('help', 'help' + ending_character):
                     print(INFO_COLOR + "\n" + "----" * 10)
                     print("HELP:")
                     print("clear: clear the conversation history.")
@@ -198,7 +198,7 @@ class MyChatGPT:
             print("\n" + ASSIS_COLOR + 'assistant: \n' + response['choices'][0]['message']['content'] + END + "\n")
 
             if self.save_on_the_fly is not None:
-                self.save_to_file(self.save_on_the_fly, is_cmd)
+                self.save_to_file(self.save_on_the_fly, on_the_fly=True)
 
 
 if __name__ == "__main__":
@@ -222,4 +222,3 @@ if __name__ == "__main__":
 
     mychatgpt = MyChatGPT(args)
     mychatgpt.run()
-
