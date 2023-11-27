@@ -62,7 +62,7 @@ mychatgpt --prompt YOUR_PROMPT
 
 Run with setting the temperature to 1.1 (the higher the value, the random the text, default 1.0):
 ```
-mychatgpt --prompt YOUR_PROMPT 1.1
+mychatgpt --temperature 1.1
 ```
 
 Run and save conversation history on the fly:
