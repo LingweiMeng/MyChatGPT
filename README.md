@@ -10,8 +10,11 @@ Just run the code and type something.
 
 ### 1. Install `openai`, and download the script
 
-For MacOS and Linux:
+For Linux:
 `pip install openai==0.28 readline`
+
+For MacOS:
+`pip install openai==0.28; brew install readline`
 
 For Windows:
 `pip install openai==0.28 pyreadline3`
