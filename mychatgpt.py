@@ -12,11 +12,12 @@ openai.api_base = "INPUT_YOUR_ENDPOINT_URL"
 openai.api_key = "INPUT_YOUR_API_KEY"
 deployment_name = {"engine": "INPUT_YOUR_MODEL_NAME"}
 
+'''
 # OpenAI API
-# openai.api_key = "INPUT_YOUR_API_KEY"
-# deployment_name = {"model": "gpt-4"}
+openai.api_key = "INPUT_YOUR_API_KEY"
+deployment_name = {"model": "gpt-4"}
 # deployment_name = {"model": "gpt-3.5-turbo"}
-
+'''
 
 # Some casual prompt here.
 prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. "
