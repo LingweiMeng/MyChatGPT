@@ -1,23 +1,30 @@
-import openai
+# ref: https://github.com/openai/openai-python
+# ref: https://learn.microsoft.com/en-us/azure/ai-services/openai/reference
+# ref: https://platform.openai.com/docs/guides/vision
+
+from openai import AzureOpenAI, OpenAI
 import argparse
 import readline
+import base64
 
 # Choose Azure API or OpenAI API, comment out another one.
-
-# Azure API
-# ref: https://learn.microsoft.com/en-us/azure/ai-services/openai/reference
-openai.api_type = "azure"
-openai.api_version = "2024-02-01"
-openai.api_base = "INPUT_YOUR_ENDPOINT_URL"
-openai.api_key = "INPUT_YOUR_API_KEY"
-deployment_name = {"engine": "INPUT_YOUR_MODEL_NAME"}
+client = AzureOpenAI(
+    azure_endpoint="INPUT_YOUR_ENDPOINT_URL",
+    api_version="2024-02-01",
+    api_key="INPUT_YOUR_API_KEY",
+    timeout=120
+)
+deployment_model = "INPUT_YOUR_MODEL_NAME"
 
 '''
 # OpenAI API
-openai.api_key = "INPUT_YOUR_API_KEY"
-deployment_name = {"model": "gpt-4"}
-# deployment_name = {"model": "gpt-3.5-turbo"}
+client = OpenAI(
+    api_key="INPUT_YOUR_API_KEY",
+    timeout=120
+)
+deployment_model = "gpt-4"
 '''
+
 
 # Some casual prompt here.
 prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. "
@@ -55,7 +62,8 @@ class MyChatGPT:
         self.frequency_penalty = args.frequency_penalty
         self.presence_penalty = args.presence_penalty
 
-        print(INFO_COLOR + "NOTE: Your input must end with a '#'. \n" + END)
+        print(INFO_COLOR + "NOTE: Type 'help' to view help information and some commands." + END)
+        print(INFO_COLOR + "      Your input must end with a '#'. \n" + END)
 
         if args.load is not None:
             self.load_from_file(args.load)
@@ -71,7 +79,14 @@ class MyChatGPT:
             color = USER_COLOR if message["role"] == "user" \
                 else ASSIS_COLOR if message["role"] == "assistant" \
                 else SYSTEM_COLOR
-            print(f"\n{color}{message['role']}:\n{message['content']}{END}")
+
+            if isinstance(message['content'], list):
+                content = ['[img] ' + c['image_url']['url'] if c['type'] == 'image_url' else c['text'] for c in message['content']]
+                content = '\n'.join(content)
+            else:
+                content = message['content']
+
+            print(f"\n{color}{message['role']}:\n{content}{END}")
         print(f"\n└{'──────'*10}\n")
 
     def load_from_file(self, file_name):
@@ -113,62 +128,88 @@ class MyChatGPT:
         except FileNotFoundError:
             print(ERROR_COLOR + "Error: Conversation history not saved. It may be a path error.\n" + END)
 
+    def encode_image(self, image_path):
+        with open(image_path, "rb") as image_file:
+            return base64.b64encode(image_file.read()).decode('utf-8')
+
     def multiline_input(self, ending_character='#'):
         input_list = []
-        is_cmd = True
+        # is_cmd = True
+        img_urls = []
         while True:
             temp = input()
-            
-            if input_list == []:
-                if temp in ('clear', 'clear' + ending_character):
-                    self.conversation = self.conversation_init.copy()
-                    self.print_history()
+            is_cmd = True
 
-                elif temp in ('history', 'history' + ending_character):
-                    self.print_history()
+            if temp in ('back', 'back' + ending_character):
+                self.conversation = self.conversation[:-2] if len(self.conversation) > 2 else self.conversation_init
+                self.print_history()
 
-                elif temp in ('back', 'back' + ending_character):
-                    self.conversation = self.conversation[:-2] if len(self.conversation) > 2 else self.conversation_init
-                    self.print_history()
+            elif temp in ('clear', 'clear' + ending_character):
+                self.conversation = self.conversation_init.copy()
+                self.print_history()
 
-                elif temp in ('temperature', 'temperature' + ending_character):
-                    print(INFO_COLOR + "Current temperature: " + str(self.temperature) + END)
-                    print(INFO_COLOR + "Please input a new temperature value: " + END)
-                    self.temperature = float(input())
-                    print()
+            elif temp in ('history', 'history' + ending_character):
+                self.print_history()
 
-                elif len(temp.split()) == 2 and temp.split()[0] == "load":
-                    self.load_from_file(temp.split()[1].strip(ending_character))
-
-                elif len(temp.split()) == 2 and temp.split()[0] == "save":
-                    self.save_to_file(temp.split()[1].strip(ending_character))
-
-                elif temp in ('help', 'help' + ending_character):
-                    print(INFO_COLOR + "\n" + "----" * 10)
-                    print("HELP:")
-                    print("clear: clear the conversation history.")
-                    print("history: show the conversation history.")
-                    print("back: back to the previous conversation.")
-                    print("temperature: check and change the temperature.")
-                    print("load FILE_PATH: load the conversation history from a file.")
-                    print("save FILE_PATH: save the conversation history to a file.")
-                    print("help: show the help message.")
-                    print("----" * 10 + END + "\n")
-                else:
-                    is_cmd = False
-                if is_cmd:
-                    return
-            
-            if temp == "":
+            elif temp in ('temperature', 'temperature' + ending_character):
+                print(INFO_COLOR + "Current temperature: " + str(self.temperature) + END)
+                print(INFO_COLOR + "Please input a new temperature value: " + END)
+                self.temperature = float(input())
                 print()
-            elif temp == ending_character:
+
+            elif len(temp.split()) == 2 and temp.split()[0] == "load":
+                self.load_from_file(temp.split()[1].strip(ending_character))
+
+            elif len(temp.split()) == 2 and temp.split()[0] == "save":
+                self.save_to_file(temp.split()[1].strip(ending_character))
+
+            elif temp in ('help', 'help' + ending_character):
+                print(INFO_COLOR + "\n" + "----" * 10)
+                print("HELP:")
+                print("img IMAGE_URL: pass an url or a local path to an image for image understanding.")
+                print("back: back to the previous conversation.")
+                print("history: show the conversation history.")
+                print("clear: clear the conversation history.")
+                print("temperature: check and change the temperature.")
+                print("load FILE_PATH: load the conversation history from a file.")
+                print("save FILE_PATH: save the conversation history to a file.")
+                print("help: show the help message.")
+                print("----" * 10 + END + "\n")
+
+            else:
+                is_cmd = False
+
+            if is_cmd:
+                return
+
+            if len(temp.split()) >= 2 and temp.split()[0] == "img":
+                _img_url = temp.split()[1].rstrip('#')
+                img_url = _img_url.strip("\"").strip("'")
+                try:
+                    img_url =  img_url if "http" in temp else f"data:image/jpeg;base64,{self.encode_image(f'{img_url}')}"
+                except Exception as err:
+                    print(ERROR_COLOR + "Error: " + str(err) + END)
+                    print(ERROR_COLOR + "Or the path contains spaces.\n" + END)
+                    img_url = None
+                    continue
+                img_urls.append(img_url)
+                temp = temp.replace("img " + _img_url, "").lstrip()
+                if temp == "":
+                    continue
+
+            # if temp == "":
+            #     print()
+            if temp == ending_character:
                 break
             elif temp and temp[-1] == ending_character:
                 input_list.append(temp[:-1])
                 break
             input_list.append(temp)
-        # print("submit")
-        return "\n".join(input_list)
+
+        if len(img_urls) == 0:
+            return "\n".join(input_list)
+        else:
+            return [{"type": "text", "text": "\n".join(input_list)}] + [{"type": "image_url", "image_url": {"url": u}} for u in img_urls]
 
     def run(self):
         while (True):
@@ -181,13 +222,11 @@ class MyChatGPT:
                 self.conversation.append({"role": "user", "content": user_input})
 
             try:
-                response = openai.ChatCompletion.create(
-                    messages=self.conversation,
+                response = client.chat.completions.create(messages=self.conversation,
                     temperature=self.temperature,
                     frequency_penalty=self.frequency_penalty,
                     presence_penalty=self.presence_penalty,
-                    **deployment_name,
-                    request_timeout=120
+                    model = deployment_model
                 )
             except Exception as err:
                 print(ERROR_COLOR + "Error: " + str(err) + END)
@@ -195,8 +234,8 @@ class MyChatGPT:
                 self.conversation = self.conversation[:-1]
                 continue
 
-            self.conversation.append({"role": "assistant", "content": response['choices'][0]['message']['content']})
-            print("\n" + ASSIS_COLOR + 'assistant: \n' + response['choices'][0]['message']['content'] + END + "\n")
+            self.conversation.append({"role": "assistant", "content": response.choices[0].message.content})
+            print("\n" + ASSIS_COLOR + 'assistant: \n' + response.choices[0].message.content + END + "\n")
 
             if self.save_on_the_fly is not None:
                 self.save_to_file(self.save_on_the_fly, on_the_fly=True)
