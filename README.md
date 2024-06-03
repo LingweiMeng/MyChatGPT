@@ -11,15 +11,15 @@ Just run the code and type something.
 ### 1. Install `openai`, and download the script
 
 For Linux:
-`pip install openai==0.28 readline`
+`pip install openai readline`
 
 For MacOS:
-`pip install openai==0.28; brew install readline`
+`pip install openai; brew install readline`
 
 For Windows:
-`pip install openai==0.28 pyreadline3`
+`pip install openai pyreadline3`
 
-Then, download (or copy) `mychatgpt.py` in this repository.
+Then, download or copy `mychatgpt.py` in this repository.
 
 ### 2. Prepare an API
 
@@ -85,10 +85,10 @@ Run `mychatgpt`, and input "help", you will see:
 ```
 ----------------------------------------
 HELP:
-exit: exit the conversation.
-clear: clear the conversation history.
+img IMAGE_URL: pass an url or a local path to an image for image understanding.
+back: back to the previous conversation.
 history: show the conversation history.
-back: go back to the previous stage of the conversation.
+clear: clear the conversation history.
 temperature: check and change the temperature.
 load FILE_PATH: load the conversation history from a file.
 save FILE_PATH: save the conversation history to a file.
