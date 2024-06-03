@@ -8,6 +8,7 @@ import readline
 import base64
 
 # Choose Azure API or OpenAI API, comment out another one.
+# Azure API
 client = AzureOpenAI(
     azure_endpoint="INPUT_YOUR_ENDPOINT_URL",
     api_version="2024-02-01",
