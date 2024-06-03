@@ -190,7 +190,7 @@ class MyChatGPT:
                     img_url =  img_url if "http" in temp else f"data:image/jpeg;base64,{self.encode_image(f'{img_url}')}"
                 except Exception as err:
                     print(ERROR_COLOR + "Error: " + str(err) + END)
-                    print(ERROR_COLOR + "Or the path contains spaces.\n" + END)
+                    print(ERROR_COLOR + "Or the path contains spaces. Please re-try.\n" + END)
                     img_url = None
                     continue
                 img_urls.append(img_url)
