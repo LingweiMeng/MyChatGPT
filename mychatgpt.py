@@ -104,7 +104,7 @@ class MyChatGPT:
                 for line in lines:
                     if line.strip() in ["user:", "assistant:", "system:"]:
                         if role is not None:
-                            conversation.append({"role": role, "content": content.strip()})
+                            conversation.append({"role": role, "content": content.strip().rstrip("#")})
                             content = ""
                         role = line.strip()[:-1]
                     else:
@@ -121,7 +121,7 @@ class MyChatGPT:
     def save_to_file(self, file_name, on_the_fly=False):
         try:
             lines = [f"{message['role']}:\n{message['content']}\n\n" for message in self.conversation]
-            with open(file_name.strip("\"").strip("'"), "w") as f:
+            with open(file_name.strip("\"").strip("'"), "w", encoding="utf-8") as f:
                 f.write(f"temperature: {self.temperature}\n\n")
                 f.writelines(lines)
             if not on_the_fly:
