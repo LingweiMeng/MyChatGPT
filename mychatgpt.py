@@ -92,7 +92,7 @@ class MyChatGPT:
 
     def load_from_file(self, file_name):
         try:
-            with open(file_name, "r") as f:
+            with open(file_name, "r", encoding="utf8") as f:
                 lines = f.readlines()
                 conversation = []
                 role = None
