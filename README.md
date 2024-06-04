@@ -85,7 +85,7 @@ Run `mychatgpt`, and input "help", you will see:
 ```
 ----------------------------------------
 HELP:
-img IMAGE_URL: pass an url or a local path to an image for image understanding.
+img IMAGE_URL [TEXT]: pass an url or a local path to an image for image understanding. [TEXT] is optional.
 back: back to the previous conversation.
 history: show the conversation history.
 clear: clear the conversation history.
