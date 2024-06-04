@@ -167,7 +167,7 @@ class MyChatGPT:
             elif temp in ('help', 'help' + ending_character):
                 print(INFO_COLOR + "\n" + "----" * 10)
                 print("HELP:")
-                print("img IMAGE_URL: pass an url or a local path to an image for image understanding.")
+                print("img IMAGE_URL [TEXT]: pass an url or a local path to an image for image understanding. [TEXT] is optional.")
                 print("back: back to the previous conversation.")
                 print("history: show the conversation history.")
                 print("clear: clear the conversation history.")
