@@ -92,7 +92,7 @@ class MyChatGPT:
 
     def load_from_file(self, file_name):
         try:
-            with open(file_name, "r", encoding="utf8") as f:
+            with open(file_name.strip("\"").strip("'"), "r", encoding="utf8") as f:
                 lines = f.readlines()
                 conversation = []
                 role = None
@@ -121,7 +121,7 @@ class MyChatGPT:
     def save_to_file(self, file_name, on_the_fly=False):
         try:
             lines = [f"{message['role']}:\n{message['content']}\n\n" for message in self.conversation]
-            with open(file_name, "w") as f:
+            with open(file_name.strip("\"").strip("'"), "w") as f:
                 f.write(f"temperature: {self.temperature}\n\n")
                 f.writelines(lines)
             if not on_the_fly:
