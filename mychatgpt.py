@@ -11,7 +11,7 @@ import base64
 # Azure API
 client = AzureOpenAI(
     azure_endpoint="INPUT_YOUR_ENDPOINT_URL",
-    api_version="2024-02-01",
+    api_version="2024-06-01",
     api_key="INPUT_YOUR_API_KEY",
     timeout=120
 )
