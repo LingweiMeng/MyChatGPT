@@ -28,7 +28,8 @@ deployment_model = "gpt-4"
 
 
 # Some casual prompt here.
-prompt = "You are ChatGPT, a large language model trained by OpenAI. Follow the user's instructions carefully. "
+prompt = "You are ChatGPT, a large language model trained by OpenAI."
+# prompt += "Follow the user's instructions carefully."
 # prompt += "Respond using markdown."
 
 creation_params = {
