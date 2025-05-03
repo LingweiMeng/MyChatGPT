@@ -199,8 +199,8 @@ class MyChatGPT:
                 if temp == "":
                     continue
 
-            # if temp == "":
-            #     print()
+            if temp == "":
+                 print()
             if temp == ending_character:
                 break
             elif temp and temp[-1] == ending_character:
